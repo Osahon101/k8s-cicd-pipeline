@@ -4,11 +4,11 @@ terraform {
   backend "s3" {
     # Replace this with your bucket name!
     bucket         = "terraform-ci-osahon"
-    key            = "/jjtech/terraform.tfstate"
+    key            = "jjtech/terraform.tfstate"
     region         = "ca-central-1"
 
     # Replace this with your DynamoDB table name!
-    dynamodb_table = "jjtech-dynamodb"
+    dynamodb_table = "terraform-lock-table"
   }
   
   required_providers {
