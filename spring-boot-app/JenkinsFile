@@ -3,7 +3,7 @@ pipeline {
   
   environment {
         WORKSPACE = "${env.WORKSPACE}"
-        AWS_DEFAULT_REGION = "us-east-1"
+        AWS_DEFAULT_REGION = "ca-central-1"
     }
 
   tools {
@@ -16,7 +16,7 @@ pipeline {
     stage('Git Checkout') {
       steps {
         echo 'Cloning the application code...'
-        git branch: 'main', url: 'https://github.com/anselmenumbisia/jjtech-ci-cd-pipeline-project-k8s.git'
+        git branch: 'main', url: 'https://github.com/Osahon101/k8s-cicd-pipeline.git'
       }
     }
 
@@ -113,9 +113,9 @@ pipeline {
 
     stage('Build and Push Docker Image') {
       environment {
-        awsAccountId = '389029577690'
-        region = 'us-east-1'
-        repositoryName = 'jjtech-demo'
+        awsAccountId = '455474668732'
+        region = 'ca-central-1'
+        repositoryName = 'k8s-demo'
         dockerImageTag = "${BUILD_NUMBER}"
         ecrRegistry = "${awsAccountId}.dkr.ecr.${region}.amazonaws.com"
       }
@@ -129,7 +129,7 @@ pipeline {
                 sh "docker tag ${repositoryName}:${dockerImageTag} ${ecrRegistry}/${repositoryName}:${dockerImageTag}"
                 sh "docker push ${ecrRegistry}/${repositoryName}:${dockerImageTag}"
                 sh "docker rmi ${ecrRegistry}/${repositoryName}:${dockerImageTag}"
-                sh " docker rmi ${repositoryName}:${dockerImageTag}"
+                sh "docker rmi ${repositoryName}:${dockerImageTag}"
       }
     }
 
@@ -156,7 +156,7 @@ pipeline {
 
     stage("Deploy to EKS"){
         environment {
-        region = 'us-east-1'
+        region = 'ca-central-1'
         clusterName = 'jjtech-demo-cluster'
       }       
         steps {  
